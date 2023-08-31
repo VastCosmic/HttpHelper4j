@@ -13,26 +13,26 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class HttpHelper {
-    public static IResponse get(String url) throws IOException {
+    public static IResponse get(String url) {
         ClassicHttpRequest httpGet = ClassicRequestBuilder.get(url).build();
         return executeRequest(httpGet);
     }
 
-    public static IResponse get(String url, String token) throws IOException {
+    public static IResponse get(String url, String token) {
         ClassicHttpRequest httpGet = ClassicRequestBuilder.get(url)
                 .setHeader("Authorization", token)
                 .build();
         return executeRequest(httpGet);
     }
 
-    public static IResponse get(String url, Header header) throws IOException {
+    public static IResponse get(String url, Header header) {
         ClassicHttpRequest httpGet = ClassicRequestBuilder.get(url)
                 .setHeader(header)
                 .build();
         return executeRequest(httpGet);
     }
 
-    public static IResponse post(String url, String reqBody) throws IOException {
+    public static IResponse post(String url, String reqBody) {
         if (reqBody == null) {
             Log.error("ReqBody can not be null!");
             return null;
@@ -43,7 +43,7 @@ public class HttpHelper {
         return executeRequest(httpPost);
     }
 
-    public static IResponse post(String url, String reqBody, String token) throws IOException {
+    public static IResponse post(String url, String reqBody, String token) {
         if (reqBody == null) {
             Log.error("ReqBody can not be null!");
             return null;
@@ -55,7 +55,7 @@ public class HttpHelper {
         return executeRequest(httpPost);
     }
 
-    public static IResponse post(String url, String reqBody, Header header) throws IOException {
+    public static IResponse post(String url, String reqBody, Header header) {
         if (reqBody == null) {
             Log.error("ReqBody can not be null!");
             return null;
@@ -78,7 +78,7 @@ public class HttpHelper {
         return executeRequest(httpPut);
     }
 
-    public static IResponse delete(String url) throws IOException {
+    public static IResponse delete(String url) {
         ClassicHttpRequest httpDelete = ClassicRequestBuilder.delete(url).build();
         return executeRequest(httpDelete);
     }
@@ -89,7 +89,6 @@ public class HttpHelper {
             httpclient.execute(request, response -> {
                 var code = response.getCode();
                 var reason = response.getReasonPhrase();
-                var version = response.getVersion();
                 var headers = response.getHeaders();
                 var body = EntityUtils.toString(response.getEntity());
                 result.set(new IResponse(code, reason, headers, body));
